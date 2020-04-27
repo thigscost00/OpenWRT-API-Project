@@ -14,6 +14,7 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }*/
 
+    //TODO: Verificar se o MAC já está cadastrado
     public function register(Request $request) {
         $router = Router::create([
             'mac' => $request->mac

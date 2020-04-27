@@ -7,4 +7,4 @@ Route::post('/register', 'AuthController@register');
 
 Route::get('/config', 'AuthController@config');
 
-Route::post('/me', 'AuthController@me');
+Route::get('/me', 'AuthController@me');
