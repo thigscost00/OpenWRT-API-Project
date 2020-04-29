@@ -1,7 +1,6 @@
 #! /bin/bash
-IMAGE="openwrt-18.06.4-x86-generic-combined-ext4.img"
-#IMAGE="overlay01.qcow2"
-#IMAGE="snapshot.qcow2"
+#IMAGE="openwrt-18.06.4-x86-generic-combined-ext4.img"
+IMAGE="snapshot.qcow2"
 LAN="ledetap0"
 
 brctl addbr br0

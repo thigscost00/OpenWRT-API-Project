@@ -34,5 +34,4 @@ services:
     working_dir: /application
     volumes:
       - ./server:/application
-      #- .:/application
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
