@@ -13,6 +13,9 @@ PASSWORD=$(cat mysql_env/docker-compose.yml | grep MYSQL_PASSWORD | awk -F"=" '{
     sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$PASSWORD/g" .env
 )
 
+#Gerar chave de criptografia de sessão do usuário
+docker exec -d $PHPCONTAINER php artisan key:generate
+
 #Baixar vendors
 docker exec -d $PHPCONTAINER composer update
 
@@ -21,3 +24,7 @@ docker exec -d $PHPCONTAINER php artisan migrate
 
 #Adicionar secret key para jwt-auth
 docker exec -d $PHPCONTAINER php artisan jwt:secret
+
+#Mudar permissões dos arquivos Bootstrap e storage
+docker exec -d $PHPCONTAINER sh init.sh
+rm mysql_env/server/init.sh 

@@ -26,13 +26,17 @@ class AuthController extends Controller
     }
 
     public function config(Request $request) {
-        $config['iface'] = "test";
-        $config['ifname'] = "eth1";
-        $config['ip'] = "192.168.2.7";
-        $config['mask'] = "255.255.255.0";
-        $config['proto'] = "static";
+        if (!is_null(auth()->user())) {
+            $config['iface'] = "test";
+            $config['ifname'] = "eth1";
+            $config['ip'] = "192.168.2.7";
+            $config['mask'] = "255.255.255.0";
+            $config['proto'] = "static";
 
-        return json_encode($config);
+            return json_encode($config);
+        } else {
+            return "{}";
+        }
     }
 
     public function me() {
