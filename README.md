@@ -1,15 +1,16 @@
 # OpenWRT-API-Project
-Projeto de graduação, virtualização do OpenWRT para simulação de comunicação com API.
 
+Projeto de graduação, emulação do OpenWRT para simulação de comunicação com API Zero Touch.
 
-Commands:
+##Getting Started
 
-docker-compose up -d
-docker-compose exec php-fpm bash
------------------------------------------------------------------------
-sudo chown -R $USER:www-data storage
-sudo chown -R $USER:www-data bootstrap/cache
+###Dependências
 
-chmod -R 775 storage
-chmod -R 775 bootstrap/cache
------------------------------------------------------------------------
+* `sudo apt-get update && sudo apt-get install -y qemu-system-x86`
+* [Docker](https://docs.docker.com/engine/install/ubuntu/)
+* [Docker-compose](https://docs.docker.com/compose/install/)
+
+###Instalação
+
+* Na pasta mysql_env execute: `docker-compose up -d`.
+* Execute `sh setup.sh` e em seguida `sh qemu-up.sh` na pasta raiz do projeto.
