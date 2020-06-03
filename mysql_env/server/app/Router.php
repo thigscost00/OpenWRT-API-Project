@@ -14,7 +14,7 @@ class Router extends Authenticatable implements JWTSubject
 
     protected $table = 'routers';
     protected $fillable = [
-        'mac'
+        'mac',
     ];
 
     public function getJWTIdentifier()

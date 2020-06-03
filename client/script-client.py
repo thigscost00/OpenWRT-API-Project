@@ -1,26 +1,46 @@
 import requests
 import json
 import subprocess
+import zipfile
+import StringIO
+import zerotouch
 
-cert = ('/root/client.crt','/root/client.key')
+cert = ('/root/client.crt', '/root/client.key')
 cacert = '/root/ca.crt'
 
+response = requests.get(
+    'https://192.168.1.2:8443/refresh',
+    json={'mac': '52:54:00:12:34:57'},
+    cert=cert,
+    verify=cacert
+)
 
-response = requests.post('https://192.168.1.2:8443/register', data={'mac':'52:54:00:12:34:57'}, cert=cert, verify=cacert)
 token = json.loads(response.text)
 token = token['access_token']
 
-response = requests.get('https://192.168.1.2:8443/config', data={'token':token}, cert=cert, verify=cacert)
-config = json.loads(response.text)
+file_token = open("token", "w")
+file_token.write(token)
+file_token.close()
 
-iface = ("config interface \'" + config['iface'] + "\'\n"
-        "\toption ifname \'" + config['ifname'] + "\'\n"
-        "\toption ipaddr \'" + config['ip'] + "\'\n"
-        "\toption netmask \'" + config['mask'] + "\'\n"
-        "\toption proto \'" + config['proto'] + "\'\n"
-        )
-with open('/etc/config/network', "a") as network:
-    network.write(iface)
+response = requests.get(
+    'https://192.168.1.2:8443/config',
+    json={'token': token},
+    cert=cert,
+    verify=cacert,
+    stream=True
+)
 
-cmd = "/etc/init.d/network reload"
-subprocess.call(cmd.split())
+z = zipfile.ZipFile(StringIO.StringIO(response.content))
+z.extractall()
+
+config_json = open("config2", "r")
+config_json = json.load(config_json)
+
+if "uci" in config_json:
+    uci_json = config_json['uci']
+    zt = zerotouch.ZeroTouch()
+    zt.uciconfig(uci_json)
+if "cmd" in config_json:
+    for cmd in config_json['cmd']:
+        print(cmd)
+        # subprocess.call(cmd.split())
