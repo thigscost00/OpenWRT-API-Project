@@ -1,0 +1,19 @@
+{
+    "uci": {
+        "network": [{
+            "name": "test",
+            "type": "interface",
+            "uci_cmd": {
+                "set": {
+                    "ifname": "eth1",
+                    "ipaddr": "192.168.15.1",
+                    "netmask": "255.255.255.0",
+                    "proto": "static"
+                }
+            }
+        }]
+    },
+    "cmd": [
+        "/etc/init.d/network reload"
+    ]
+}

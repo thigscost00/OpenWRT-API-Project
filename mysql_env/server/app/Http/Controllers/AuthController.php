@@ -70,25 +70,16 @@ class AuthController extends Controller
                         ->where('router_id', $router->id)
                         ->get();
 
-            $zip = new ZipArchive;
-            $zip_name = public_path() . "/config.zip";
+            $tar_name = public_path() . "/config.tar.gz";
+            $cf_path = "";
 
-            if ($zip->open($zip_name, ZipArchive::CREATE) === true) {
-                foreach ($configs as $cf) {
-                    //$cf_file = Storage::disk('local')->get($cf->name);
-
-                    $cf_path = storage_path('app') . "/$cf->name.json";
-                    $zip->addFile($cf_path, "$cf->name");
-                }
-
-                if ($zip->close() === false) {
-                    echo "Arquivo Zip não pode ser criado";
-                }
-            } else {
-                var_dump($zip);
+            foreach ($configs as $cf) {
+                $cf_path = $cf_path . " $cf->name";
             }
 
-            return response()->download($zip_name);
+            exec("tar -zcf $tar_name -C " . storage_path('app') . $cf_path);
+
+            return response()->download($tar_name);
         } else {
             return "{}";
         }
