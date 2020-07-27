@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Router;
 use App\RoutConf;
 use Storage;
-use ZipArchive;
 
 class AuthController extends Controller
 {
@@ -34,8 +33,6 @@ class AuthController extends Controller
                     'configuration_id' => $cid
                 ]);
             }
-            //$token = auth()->tokenById($id);
-            //return $this->respondWithToken($token);
         } else {
             $router = Router::create([
                 'mac' => $mac
@@ -50,9 +47,6 @@ class AuthController extends Controller
                     'configuration_id' => $cid
                 ]);
             }
-
-            //$token = auth('api')->login($router);
-            //return $this->respondWithToken($token);
         }
 
         $allrout = Router::all();
@@ -96,9 +90,6 @@ class AuthController extends Controller
         } else {
             return "{}";
         }
-        //$token = auth()->refresh(true, true);
-
-        //return $this->respondWithToken($token);
     }
 
     public function me() {
