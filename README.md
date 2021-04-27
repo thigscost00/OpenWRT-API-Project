@@ -6,7 +6,7 @@ Projeto de graduação, emulação do OpenWRT para simulação de comunicação 
 
 ### Dependências
 
-* `sudo apt-get update && sudo apt-get install -y qemu-system-x86`
+* `sudo apt-get update && sudo apt-get install -y qemu-system-x86 net-tools bridge-utils`
 * [Docker](https://docs.docker.com/engine/install/ubuntu/)
 * [Docker-compose](https://docs.docker.com/compose/install/)
 
